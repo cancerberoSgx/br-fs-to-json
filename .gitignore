@@ -1,0 +1,7 @@
+/dist
+node_modules/
+/static
+src/dist
+/docs2
+docs
+/test
