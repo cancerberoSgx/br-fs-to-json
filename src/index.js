@@ -1,6 +1,5 @@
 const staticModule = require('static-module')
 const fs2json = require('fs-to-json').fs2json
-const fs = require('fs')
 const stream = require('stream')
 const resolve = require('resolve')
 const path = require('path')
@@ -10,7 +9,6 @@ module.exports = function (file, opts) {
 
   // copied from brfs: 
   if (/\.json$/.test(file)) return through();
-
   function resolver(p) {
     return resolve.sync(p, { basedir: path.dirname(file) });
   }
@@ -36,6 +34,9 @@ module.exports = function (file, opts) {
         const output = (data, error) => `${BR_FS_TO_JSON_GLOBAL_NAME}${counter++}__=({
   then: function(handler) {
     handler(${data ? JSON.stringify(data) : 'undefined'});
+  },
+  catch: function(handler) {
+    handler();${/*there will never here since it will fails at compile time*/''}
   }
 })`
         fs2json(config)
@@ -49,19 +50,18 @@ module.exports = function (file, opts) {
             throw error
           })
         return readable
-      },
-    },
+      }
+    }
   },
-
+  
     {
       vars: vars,
       varModules: { path: path },
       parserOpts: opts && opts.parserOpts,
       sourceMap: opts && (opts.sourceMap || opts._flags && opts._flags.debug)
-    }
-  )
+    })
 
-  return fs.createReadStream(file).pipe(sm)
+  return sm
 };
 
 
