@@ -1,15 +1,15 @@
 const shell = require('shelljs')
-shell.config.silent = true
+// shell.config.silent = true
 
 describe('basic', () => {
 
-  beforeEach(() => {
-    shell.mkdir('-p', 'spec/assets/bundles/')
-  })
+  // beforeEach(() => {
+  //   shell.mkdir('-p', 'spec/assets/bundles/')
+  // })
 
-  afterEach(() => {
-    shell.rm('-rf', 'spec/assets/bundles')
-  })
+  // afterEach(() => {
+  //   shell.rm('-rf', 'spec/assets/bundles')
+  // })
 
   it('should not fail if called correctly', () => {
     let p = shell.exec('npx browserify -t . -o spec/assets/bundles/test1.js spec/assets/test1.js')
@@ -43,5 +43,8 @@ describe('basic', () => {
   xit('user can user path module and __dirname variable ', () => {
     const p = shell.exec('npx browserify -t . spec/assets/usingPathAndDirName.js -o spec/assets/bundles/usingPathAndDirName.js')
     expect(p.code).toBe(0)
+    const output = shell.exec('node spec/assets/usingPathAndDirName.js').stdout
+    const bundleOutput = shell.exec('node spec/assets/bundles/usingPathAndDirName.js').stdout
+    expect(output).toEqual(bundleOutput)
   })
 })

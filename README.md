@@ -1,6 +1,8 @@
 Browserify transformation to embed files (globs) as JSON as JSON variables
 
-Based on [fs-to-json](https://github.com/cancerberoSgx/fs-to-json)
+In general you will have the same limitations as with [brfs](https://github.com/browserify/brfs).
+
+Based on [fs-to-json](https://github.com/cancerberoSgx/fs-to-json).
 
 ```sh
 npm install --save-dev br-fs-to-json
@@ -14,7 +16,19 @@ npm install --save-dev br-fs-to-json
 browserify -t br-fs-to-json -o dist/bundle.js src/index.js
 ```
 
-## Code example
+## Code examples
+
+You can use `path` module and variables `__dirname` and `__filename`, example: 
+
+```javascript
+var path = require('path')   
+fs2json({ input: path.join(__dirname, 'spec', 'support', '**')})
+.then(files => {
+  console.log(Object.keys(files))
+})
+```
+
+"Real life" example: packing all handlebars templates in a variable:
 
 ```javascript
 const fs2json = require('fs-to-json').fs2json
@@ -32,13 +46,36 @@ module.exports = function renderTemplate(templateFile, context) {
 }
 ```
 
+# Captchas
+
+**Make sure you only call fs2json once! Each time you make the call, the files will get embedded again in your code!**
+
+## Asynchronous
+
+fs-to-json doesn't support a synchronous call, yet. But when working with this extension you can be sure the .then() handler will be called 
+
+The same limitations as with brfs. Only supports [staticable analizable expressions](http://npmjs.org/package/static-eval). 
+
+## Examples that won't work: 
+
+doesn't work and will generate a very big file including fs2json ! **don't do it!**
+
+```javascript
+var pattern = 'spec/support/*' 
+fs2json({ input: pattern }).then(files => {
+  console.log(Object.keys(files))
+})
+```
+
+The following will work but will generate a very big file including fs2json ! **don't do it!**
+
+```javascript
+fs2json({ input: require('path').join(__dirname, 'spec', 'support', '**') }).then(files => {
+  console.log(Object.keys(files))
+})
+```
 
 # TODO
- * static analisys doesnt work: 
- 
-const pattern = 'spec/support/*'
-fs2json({ input: pattern })
 
- * and so path or __dirname doesn't work
- 
+ * override config.output so i
  * test with await
