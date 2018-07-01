@@ -52,16 +52,14 @@ module.exports = function renderTemplate(templateFile, context) {
 
  * Make sure you **only call fs2json once!** Each time you make the call, the files will get embedded again in your code!
 
- * Don't be too inventive. **try to use signatures expressions like above's**. 
+ * Don't be too inventive. **use simple expressions like above's** :
+ 
+   - **Use only one `then()`** - don't use `catch()` 
+   - **pass a plain configuration object** - don't use funcions to calculate properties, `transformFileName` property won't work.
 
  * Isolate this code in **its own file containing only these code** and getters for the embedded data, nothing more.
 
-
-## Asynchronous call signature
-
- * Asynchronous call: **asynchronous call is not adecuate for this** but fs-to-json doesn't support a synchronous call, **yet**. However, you can be sure that the `then()` handler will be called synchronously, so you assign the result in a variable in the handler and can access it right away in the next statement. 
-
- * **Just use `then()` - don't use `catch()` or `finally()` !** Just **one** `then()` 
+ * Asynchronous call: **asynchronous call is not adequate for this** but fs-to-json doesn't support a synchronous call, **yet**. However, you can be sure that the `then()` handler will be called synchronously, so you assign the result in a variable in the handler and can access it right away in the next statement. 
 
 The same limitations as with brfs. Only supports [staticable analizable expressions](http://npmjs.org/package/static-eval). 
 
