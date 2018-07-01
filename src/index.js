@@ -6,15 +6,9 @@ const stream = require('stream')
 var sm = staticModule({
 
   'fs-to-json': {
-    fs2json: function (userConfig) {
-      console.log(arguments);
-      
+    fs2json: function (config) {
       var readable = new stream.Readable();
       readable._read = function noop() { }
-      // const writable = new stream.Writable()
-      // override user output to a stream ignored 
-      const config = userConfig//Object.assign({}, userConfig, { output: writable })
-
       const output = (data, error) => `({
   then: function(handler) {
     handler(${data ? JSON.stringify(data) : 'undefined'});
@@ -25,15 +19,12 @@ var sm = staticModule({
 })`
       fs2json(config)
         .then(data => {
-          // writable.destroy()
           readable.push(output(data))
-          readable.push(null);
+          readable.push(null)
         })
         .catch(error => {
-          // writable.destroy()
           console.error('An error occurred while calling fs-to-json: ' + error + '\n' + error.stack)
-          // readable.emit('error', error)          
-          readable.push(null);
+          readable.push(null)
           throw error
         })
       return readable

@@ -8,3 +8,4 @@ __tests__
 yarn.lock
 /docs
 /docs2
+/spec
