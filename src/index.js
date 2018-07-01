@@ -89,4 +89,4 @@ var path = require('path')
 
 awful i know but this transformation was created in hours and the real solution is fs-to-json provides a sync API (will do)
 */
-const BR_FS_TO_JSON_GLOBAL_NAME = '_$XP4ih879$p'
+const BR_FS_TO_JSON_GLOBAL_NAME = 'this._$XP4ih879$p'

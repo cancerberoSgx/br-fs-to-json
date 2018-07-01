@@ -1,6 +1,6 @@
 {
   "name": "br-fs-to-json",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "src/index.js",
   "description": "Browserify transformation to embed files (globs) as JSON as JSON variables using fs-to-json",
   "scripts": {
