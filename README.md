@@ -58,7 +58,7 @@ module.exports = function renderTemplate(templateFile, context) {
 
 ## Asynchronous
 
-fs-to-json doesn't support a synchronous call, yet. But when working with this extension you can be sure the .then() handler will be called 
+fs-to-json doesn't support a synchronous call, yet so the current call signature is not the best for this situation.However, you can be sure that the `then()` handler will be called synchronously, so you assign the result in a varriable in the handler and can access it right away in the next statement. 
 
 The same limitations as with brfs. Only supports [staticable analizable expressions](http://npmjs.org/package/static-eval). 
 

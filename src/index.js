@@ -1,6 +1,6 @@
-var staticModule = require('static-module')
+const staticModule = require('static-module')
 const fs2json = require('fs-to-json').fs2json
-var fs = require('fs')
+const fs = require('fs')
 const stream = require('stream')
 const resolve = require('resolve')
 const path = require('path')
@@ -14,7 +14,7 @@ module.exports = function (file, opts) {
   function resolver(p) {
     return resolve.sync(p, { basedir: path.dirname(file) });
   }
-  var vars = {
+  const vars = {
     __filename: file,
     __dirname: path.dirname(file),
     require: { resolve: resolver }
@@ -31,10 +31,7 @@ module.exports = function (file, opts) {
     'fs-to-json': {
       fs2json: function (config) {
 
-        console.log('SEBA', arguments);
-
-
-        var readable = new stream.Readable();
+        const readable = new stream.Readable();
         readable._read = function noop() { }
         const output = (data, error) => `${BR_FS_TO_JSON_GLOBAL_NAME}${counter++}__=({
   then: function(handler) {
