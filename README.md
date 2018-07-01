@@ -46,9 +46,15 @@ module.exports = function renderTemplate(templateFile, context) {
 }
 ```
 
-# Captchas
+# Captchas / TIPS
 
-**Make sure you only call fs2json once! Each time you make the call, the files will get embedded again in your code!**
+ * **async won't work**
+
+ * Make sure you **only call fs2json once!** Each time you make the call, the files will get embedded again in your code!
+
+ * Don't be too inventive. **try to use signatures expressions like above's**. 
+
+ * Isolate this code in **its own file containing only these code** and getters for the embedded data, nothing more.
 
 ## Asynchronous
 
