@@ -55,7 +55,8 @@ module.exports = function renderTemplate(templateFile, context) {
  * Don't be too inventive. **use simple expressions like above's** :
  
    - **Use only one `then()`** - don't use `catch()` 
-   - **pass a plain configuration object** - don't use funcions to calculate properties, `transformFileName` property won't work.
+   - **pass a plain configuration object** - don't use funcions to calculate properties
+   - `transformFileName` property won't work - modify file names in the client side
 
  * Isolate this code in **its own file containing only these code** and getters for the embedded data, nothing more.
 
