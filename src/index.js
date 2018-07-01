@@ -1,18 +1,17 @@
-var staticModule = require('static-module');
-// var quote = require('quote-stream');
-
-
+var staticModule = require('static-module')
 const fs2json = require('fs-to-json').fs2json
-var fs = require('fs');
-const stream = require('stream');
+var fs = require('fs')
+const stream = require('stream')
 
 var sm = staticModule({
 
   'fs-to-json': {
     fs2json: function (userConfig) {
+      console.log(arguments);
+      
       var readable = new stream.Readable();
       readable._read = function noop() { }
-      const writable = new stream.Writable()
+      // const writable = new stream.Writable()
       // override user output to a stream ignored 
       const config = userConfig//Object.assign({}, userConfig, { output: writable })
 
@@ -26,13 +25,15 @@ var sm = staticModule({
 })`
       fs2json(config)
         .then(data => {
-          writable.destroy()
+          // writable.destroy()
           readable.push(output(data))
           readable.push(null);
         })
         .catch(error => {
-          writable.destroy()
+          // writable.destroy()
           console.error('An error occurred while calling fs-to-json: ' + error + '\n' + error.stack)
+          // readable.emit('error', error)          
+          readable.push(null);
           throw error
         })
       return readable
