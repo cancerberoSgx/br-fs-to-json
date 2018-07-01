@@ -34,9 +34,16 @@ module.exports = function (file, opts) {
         const output = (data, error) => `${BR_FS_TO_JSON_GLOBAL_NAME}${counter++}__=({
   then: function(handler) {
     handler(${data ? JSON.stringify(data) : 'undefined'});
+    return {then: function(){}, catch: function(){}, finally:function(){}}${/*just to comply with the signature so user's code don't fail*/''}
   },
-  catch: function(handler) {
-    handler();${/*there will never here since it will fails at compile time*/''}
+  catch: function() {
+    ${/*promise will never be rejected since it will fails at compile time - just want to comply with the signature*/''} 
+    return {
+      then: function(handler) {${/*for very crazy people that .catch() before .then()*/''}
+        handler(${data ? JSON.stringify(data) : 'undefined'});
+        return {then: function(){}, catch: function(){}, finally:function(){}}
+      }, catch: function(){}, finally:function(){}
+    }
   }
 })`
         fs2json(config)

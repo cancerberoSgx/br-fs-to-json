@@ -3,7 +3,8 @@ var fs2json = require('fs-to-json').fs2json
 // HEADS UP - the test expect against stdout. If we switch the next two statements the test will fail because in bundle it is sync but here the second one that calls path.join() will  take bit longer to execute and so test fails.:
 
  // works and doesn't include any extra file
-fs2json({ input: 'spec/support/*' }).then(files => {
+fs2json({ input: 'spec/support/*' })
+.then(files => {
   console.log(Object.keys(files))
 })
 

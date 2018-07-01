@@ -56,9 +56,12 @@ module.exports = function renderTemplate(templateFile, context) {
 
  * Isolate this code in **its own file containing only these code** and getters for the embedded data, nothing more.
 
-## Asynchronous
 
-fs-to-json doesn't support a synchronous call, yet so the current call signature is not the best for this situation.However, you can be sure that the `then()` handler will be called synchronously, so you assign the result in a varriable in the handler and can access it right away in the next statement. 
+## Asynchronous call signature
+
+ * Asynchronous call: **asynchronous call is not adecuate for this** but fs-to-json doesn't support a synchronous call, **yet**. However, you can be sure that the `then()` handler will be called synchronously, so you assign the result in a variable in the handler and can access it right away in the next statement. 
+
+ * **Just use `then()` - don't use `catch()` or `finally()` !** Just **one** `then()` 
 
 The same limitations as with brfs. Only supports [staticable analizable expressions](http://npmjs.org/package/static-eval). 
 
